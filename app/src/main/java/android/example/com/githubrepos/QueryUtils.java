@@ -23,6 +23,7 @@ public class QueryUtils {
     public static final String LOG_TAG = MainActivity.class.getName();
 
     private QueryUtils() {
+        
     }
 
     /**
