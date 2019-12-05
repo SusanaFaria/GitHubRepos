@@ -4,14 +4,15 @@ public class Repos {
 
     private String mLanguage;
     private String mTitle;
-    private String mStars;
+    private String mUrl;
 
 
-    public Repos(String language, String title, String stars) {
+    public Repos(String language, String title, String url) {
 
       mLanguage = language;
       mTitle = title;
-      mStars = stars;
+        mUrl = url;
+
     }
 
     public String getLanguage() {
@@ -22,9 +23,10 @@ public class Repos {
         return mTitle;
     }
 
-    public String getStars() {
-        return mStars;
+    public String getUrl() {
+        return mUrl;
     }
+
 
 }
 

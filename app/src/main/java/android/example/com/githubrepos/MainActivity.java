@@ -1,7 +1,5 @@
 package android.example.com.githubrepos;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +9,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -23,9 +19,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<List<Repos>>, SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private static final String REPOS_REQUEST = "https://api.github.com/search/repositories?q=language:java&sort=stars";
+    private static final String REPOS_REQUEST = "https://api.github.com/search/repositories?q=language%20java&sort=stars";
     private static final String LOG_TAG = RepoLoader.class.getName();
     private static final int REPO_LOADER = 1;
     private RepoAdapter mRepoAdapter;
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
         mEmptyText = findViewById(R.id.empty_list);
         reposListView.setEmptyView(mEmptyText);
 
-        // Create a new adapter that takes an empty list of News as input
+        // Create a new adapter that takes an empty list of Repos as input
         mRepoAdapter = new RepoAdapter(this, new ArrayList<Repos>());
 
         // Set the adapter on the {@link ListView}
@@ -57,6 +55,7 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
                 Repos currentRepo = mRepoAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
+                assert currentRepo != null;
                 Uri repoUri = Uri.parse(currentRepo.getUrl());
 
                 // Create a new intent to view the news URI
@@ -108,12 +107,12 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Repos>> loader, List<Repos> reposList) {
+    public void onLoadFinished(Loader<List<Repos>> loader, List<Repos> repos) {
         mEmptyText.setText(getString(R.string.no_data));
         // Clear the adapter of previous data
         mRepoAdapter.clear();
 
-        // If there is a valid list of news, then add them to the adapter's
+        // If there is a valid list of repos, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (repos != null && !repos.isEmpty()) {
             mRepoAdapter.addAll(repos);
